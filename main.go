@@ -11,8 +11,9 @@ func main() {
 	//input := []string{"dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"}
 	//fmt.Println(reorderLogFiles(input))
 	// input := []int{1, 0, 0, 1, 0, 0, 1, 0}
-	input := []string{"leet", "code"}
-	fmt.Println(wordBreak("leetcode", input))
+	//input := []string{"leet", "code"}
+	//fmt.Println(wordBreak("leetcode", input))
+	preorderTraversal(nil)
 }
 
 func wordBreak(s string, wordDict []string) bool {
