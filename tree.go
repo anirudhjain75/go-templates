@@ -110,3 +110,28 @@ func levelOrder(root *TreeNode) [][]int {
 	}
 	return BFSMatrix
 }
+
+// Maximum depth of Binary Tree
+
+var depth int
+
+func DepthTraverse(root *TreeNode, level int) {
+	if root != nil {
+		if level > depth {
+			depth = level
+		}
+		if root.Left != nil {
+			DepthTraverse(root.Left, level+1)
+		}
+		if root.Right != nil {
+			DepthTraverse(root.Right, level+1)
+		}
+	}
+}
+
+
+func maxDepth(root *TreeNode) int {
+	depth = 0
+	DepthTraverse(root, 1)
+	return depth
+}
