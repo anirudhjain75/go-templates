@@ -135,3 +135,25 @@ func maxDepth(root *TreeNode) int {
 	DepthTraverse(root, 1)
 	return depth
 }
+
+// Path Sum using DFS
+
+func hasPathSum(root *TreeNode, sum int) bool {
+	right := false
+	left := false
+	if root == nil {
+		return false
+	}
+	isLeaf := root.Left == nil && root.Right == nil
+	currentVal := sum - root.Val
+	if currentVal  == 0 && isLeaf {
+		return true
+	}
+	if root.Left != nil {
+		left = hasPathSum(root.Left, currentVal)
+	}
+	if root.Right != nil {
+		right = hasPathSum(root.Right, currentVal)
+	}
+	return left || right
+}
