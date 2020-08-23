@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //type TreeNode struct {
 //	Val int
 //	Left *TreeNode
@@ -7,7 +9,8 @@ package main
 //}
 
 func main() {
-	preorderTraversal(nil)
+	//preorderTraversal(nil)
+	fmt.Print(buildTreePreIn([]int{3,9,20,15,7}, []int{9,3,15,20,7}))
 }
 
 // Traverse through binary tree
@@ -156,4 +159,58 @@ func hasPathSum(root *TreeNode, sum int) bool {
 		right = hasPathSum(root.Right, currentVal)
 	}
 	return left || right
+}
+
+// Merge InOrder and PostOrder array to Tree
+
+func buildTree(inorder []int, postorder []int) *TreeNode {
+	if len(inorder) == 0 && len(postorder) == 0 {
+		return nil
+	}
+	//fmt.Println("============================")
+	//fmt.Println("inorder", inorder)
+	//fmt.Println("postorder", postorder)
+
+	val := postorder[len(postorder) - 1]
+	rootPos := 0
+	for i, v := range inorder {
+		if v == val {
+			rootPos = i
+			break
+		}
+	}
+	//fmt.Println(rootPos)
+	//fmt.Println("============================"
+	return &TreeNode{
+		Val:   val,
+		Left:  buildTree(inorder[:rootPos], postorder[:rootPos]),
+		Right: buildTree(inorder[rootPos+1:], postorder[rootPos:len(postorder) - 1]),
+	}
+}
+
+// Merge InOrder and PostOrder array to Tree
+
+func buildTreePreIn(preorder []int, inorder []int) *TreeNode {
+	if len(inorder) == 0 && len(preorder) == 0 {
+		return nil
+	}
+	//fmt.Println("============================")
+	//fmt.Println("inorder", inorder)
+	//fmt.Println("preorder", preorder)
+
+	val := preorder[0]
+	rootPos := 0
+	for i, v := range inorder {
+		if v == val {
+			rootPos = i
+			break
+		}
+	}
+	//fmt.Println(rootPos)
+	//fmt.Println("============================")
+	return &TreeNode{
+		Val:   val,
+		Left:  buildTree(preorder[1:rootPos+1], inorder[:rootPos]),
+		Right: buildTree(preorder[rootPos+1:], inorder[rootPos+1:]),
+	}
 }
