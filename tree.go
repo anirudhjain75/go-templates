@@ -214,3 +214,31 @@ func buildTreePreIn(preorder []int, inorder []int) *TreeNode {
 		Right: buildTree(preorder[rootPos+1:], inorder[rootPos+1:]),
 	}
 }
+
+// Populating Next Right Pointers in Each Node
+
+type NodeX struct {
+    Val int
+    Left *NodeX
+    Right *NodeX
+    Next *NodeX
+}
+
+func connect(root *NodeX) *NodeX {
+	if root == nil {
+		return nil
+	}
+
+	if root.Right == nil {
+		return root
+	}
+
+	root.Left.Next = root.Right
+	if root.Next != nil {
+		root.Right.Next = root.Next.Left
+	}
+
+	connect(root.Left)
+	connect(root.Right)
+	return root
+}
