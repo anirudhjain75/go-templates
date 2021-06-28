@@ -28,12 +28,23 @@ func isPalindrome(input string) bool {
 
 func countSubstrings(s string) int {
 	count := 0
+	dataPool := make(map[string]bool)
 	for slidingWindowLen := 1; slidingWindowLen <= len(s); slidingWindowLen++ {
 		for i := 0; i < len(s) - slidingWindowLen + 1; i++ {
-			if isPalindrome(s[i:i+slidingWindowLen]) {
-				count++
+			val, ok := dataPool[s[i:i+slidingWindowLen]]
+			if !ok {
+				v := isPalindrome(s[i:i+slidingWindowLen])
+				if v {
+					count++
+				}
+				dataPool[s[i:i+slidingWindowLen]] = v
+			} else {
+				if val {
+					count++
+				}
 			}
 		}
 	}
+	//fmt.Println(dataPool)
 	return count
 }
